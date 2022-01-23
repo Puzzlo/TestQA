@@ -1,0 +1,18 @@
+всего было 7 ошибок. разберём их.
+1) Given I open hyperlink "e1cib/list/Document.SalesOrder" - не смогли открыть список Sales order.
+на скриншоте ( https://dev.irpteam.com/tc/repository/download/IRP_RunVA/26984:id/allure-report.zip!/data/attachments/9f0ad108e05c595a.png ) видим окно "document posting". Скорее всего можно сделать вывод, что мы хотим перейти к следующему шагу (открыть инвойсы) до закрытия предыдущего. то есть задержка 5 секунд на предыдущем шаге маловата, и надо бы Парам1 увеличить.
+
+2) "Expected number of lines in <BasisesTree> table is равно 0 and actual number is <2>". по всей видимости дерево Basises Tree - это то, у которого заголовок "add linked document rows" и у него количество строк = 2. а мы ожидаем увидеть 0. поэтому тест упал
+
+3) "Form table named <List> is not found." тут, судя по всему, такая же ошибка - после прошлого шага не успело закрыться окно конкретного документа и поэтому нам не видна форма списка (Лист) и мы не можем перейти там на пятую строку
+
+4) "check serial lot number in the Retail return receipt" приложена csv таблица, с которой должны сходиться серийные номера. но они не сходятся - тест падает
+
+5) "The button/command with <Sales invoice> header is not found." после предыдущего шага "And I click "Post" button" пост не запостился, появилось сообщение на экране, а тест продожился и мы должны были нажать на кнопку <Sales invoice>. кнопки нет - тест падает
+
+6) "Unable to move to the required line in <BasisesTree> table." не находим строку с количеством 7. (на предложенном скрине видно, что есть похожая строка - совпадает всё, кроме количества, там оно равно 5)
+
+7) аналогичная ошибка "Unable to move to the required line in <BasisesTree> table.". Видим, что в текущей ТЧ нет запрашиваемой строки, к которой мы хотим перейти 
+	| 'Currency' | 'Price'  | 'Quantity' | 'Row presentation' | 'Unit' | 
+	| 'TRY'      | '100,00' | '10,000'   | 'Dress (S/Yellow)' | 'pcs'  | 
+поэтому тест упал.
